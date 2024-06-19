@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate para la redirección
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/authService';
 
 const Home = () => {
@@ -9,16 +9,16 @@ const Home = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      navigate('/login'); // Redirige a la página de login después de cerrar sesión
+      navigate('/'); // Redirigir al usuario a la página principal
     } catch (error) {
       console.error('Error during sign-out:', error);
     }
   };
 
-  // Verifica si user está definido antes de acceder a sus propiedades
   if (!user) {
-    // Puedes redirigir a la página de login si el usuario no está autenticado
-    return <navigate to="/login" />; // Usa navigate en minúsculas para redirigir
+    // Si no hay usuario, redirigir automáticamente a la página de login
+    navigate('/login');
+    return null; // O podrías mostrar un mensaje de carga o algo más mientras se redirige
   }
 
   return (

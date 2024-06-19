@@ -1,4 +1,3 @@
-// authService.js
 import { useState, useEffect } from 'react';
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
 import app from '../utils/firebaseConfig';

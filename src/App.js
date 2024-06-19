@@ -1,16 +1,21 @@
-// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPage from './components/MainPage';
+import LoginForm from './components/Login';
 import Home from './components/Home';
-import Login from './components/Login';
+import RegisterForm from './components/RegisterForm';
+import NotFound from './components/NotFound';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="*" element={<NotFound />} /> {/* Ruta para manejar 404 */}
+        
       </Routes>
     </Router>
   );

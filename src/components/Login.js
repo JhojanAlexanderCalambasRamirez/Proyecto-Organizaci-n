@@ -30,7 +30,10 @@ const Login = () => {
       <br />
       <br />
       <button onClick={handleFacebookSignIn}>Iniciar sesión con Facebook</button>
+
     </div>
+    
+    
   );
 };
 
