@@ -1,16 +1,19 @@
-// src/services/fileService.js
-import { storage, firestore } from '../utils/firebaseConfig';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-export const uploadFile = (file, userId, folderId) => {
-  const fileRef = storage.ref(`${userId}/${folderId}/${file.name}`);
-  return fileRef.put(file).then(snapshot => snapshot.ref.getDownloadURL());
-};
+const storage = getStorage();
+const db = getFirestore();
 
-export const getFileList = (userId, folderId) => {
-  return firestore.collection('users').doc(userId).collection('files').where('folderId', '==', folderId).get();
-};
+export const uploadFile = async (userId, folderId, file) => {
+  const fileRef = ref(storage, `files/${userId}/${folderId}/${file.name}`);
+  const snapshot = await uploadBytes(fileRef, file);
+  const downloadURL = await getDownloadURL(snapshot.ref);
 
-export const deleteFile = (userId, filePath) => {
-  const fileRef = storage.ref(filePath);
-  return fileRef.delete();
+  await addDoc(collection(db, 'files'), {
+    userId,
+    folderId,
+    name: file.name,
+    url: downloadURL,
+    createdAt: new Date(),
+  });
 };

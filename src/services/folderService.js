@@ -1,20 +1,26 @@
-// src/services/folderService.js
-import { firestore } from '../utils/firebaseConfig';
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc } from 'firebase/firestore';
 
-export const createFolder = (userId, folderName, parentFolderId = null) => {
-  const folderRef = firestore.collection('users').doc(userId).collection('folders').doc();
-  return folderRef.set({
+const db = getFirestore();
+
+export const createFolder = async (userId, folderName) => {
+  const docRef = await addDoc(collection(db, 'folders'), {
+    userId,
     name: folderName,
-    parentFolderId,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    createdAt: new Date(),
   });
+  return { id: docRef.id, name: folderName };
 };
 
-export const getFolderList = (userId, parentFolderId) => {
-  return firestore.collection('users').doc(userId).collection('folders').where('parentFolderId', '==', parentFolderId).get();
+export const getFolders = async (userId) => {
+  const q = query(collection(db, 'folders'), where('userId', '==', userId));
+  const querySnapshot = await getDocs(q);
+  const folders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return folders;
 };
 
-export const deleteFolder = (userId, folderId) => {
-  const folderRef = firestore.collection('users').doc(userId).collection('folders').doc(folderId);
-  return folderRef.delete();
+export const categorizeFolder = async (folderId, category) => {
+  const folderRef = doc(db, 'folders', folderId);
+  await updateDoc(folderRef, {
+    category,
+  });
 };

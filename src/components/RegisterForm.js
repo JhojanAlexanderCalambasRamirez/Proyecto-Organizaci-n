@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth, loginGoogle, loginFacebook } from '../services/authService';
+import { useAuth, loginGoogle, loginFacebook } from '../services/AuthService';
 
 const RegisterForm = () => {
   const { signUpWithEmail } = useAuth();

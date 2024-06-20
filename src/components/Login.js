@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginGoogle, loginFacebook } from '../services/authService';
+import { loginGoogle, loginFacebook } from '../services/AuthService';
 
 const Login = () => {
   const navigate = useNavigate(); // Reemplaza useHistory por useNavigate

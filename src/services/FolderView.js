@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-import { createFolder } from '../services/FolderService';
+import React, { useState, useEffect } from 'react';
+import { createFolder, getFolders } from '../services/FolderService';
 
 const FolderView = ({ userId }) => {
   const [folderName, setFolderName] = useState('');
   const [folders, setFolders] = useState([]);
+
+  useEffect(() => {
+    const fetchFolders = async () => {
+      const userFolders = await getFolders(userId);
+      setFolders(userFolders);
+    };
+    fetchFolders();
+  }, [userId]);
 
   const handleCreateFolder = async () => {
     if (folderName.trim() === '') return;
@@ -14,7 +22,7 @@ const FolderView = ({ userId }) => {
 
   return (
     <div>
-      <h1>Folders</h1>
+      <h2>Folders</h2>
       <input
         type="text"
         value={folderName}
