@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../services/AuthProvider';
 import { firestore } from '../utils/firebaseConfig';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import '../App.css';
 
 const Home = () => {
   const { user, signOut } = useAuthContext();
@@ -12,7 +13,7 @@ const Home = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      navigate('/'); // Redirigir al usuario a la página principal
+      navigate('/');
     } catch (error) {
       console.error('Error during sign-out:', error);
     }
@@ -43,29 +44,32 @@ const Home = () => {
   }, []);
 
   if (!user) {
-    // Si no hay usuario, redirigir automáticamente a la página de login
     navigate('/login');
-    return null; // O podrías mostrar un mensaje de carga o algo más mientras se redirige
+    return null;
   }
 
   return (
-    <div>
-      <h1>Bienvenido, {user.displayName}</h1>
-      <img src={user.photoURL} alt="User profile" width="150" />
-      <button onClick={handleSignOut}>Cerrar sesión</button>
-
-      <div>
-        <h2>Carpetas</h2>
-        <button onClick={handleAddFolder}>Agregar Carpeta</button>
-        <ul>
-          {folders.map(folder => (
-            <li key={folder.id}>
-              <span onClick={() => navigate(`/folder/${folder.id}`)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                {folder.name}
-              </span>
-            </li>
-          ))}
-        </ul>
+    <div className="home full-height text-center">
+      <div className="background-image" style={{ backgroundImage: `url('https://uploads-ssl.webflow.com/612e51f97cd5712b11eaca4d/62a1141737dfd2778b06bd5f_pexels-pixabay-357514.jpg')` }}></div>
+      <div className="container">
+        <div className="user-section">
+          <h1>Bienvenido, {user.displayName}</h1>
+          <img className="user-photo" src={user.photoURL} alt="User profile" />
+          <button className="signout-button" onClick={handleSignOut}>Cerrar sesión</button>
+        </div>
+        <div className="folders-section">
+          <h2>Carpetas</h2>
+          <button className="add-folder-button" onClick={handleAddFolder}>Agregar Carpeta</button>
+          <ul className="folders-list">
+            {folders.map(folder => (
+              <li key={folder.id}>
+                <span className="folder-link" onClick={() => navigate(`/folder/${folder.id}`)}>
+                  {folder.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

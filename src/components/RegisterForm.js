@@ -1,3 +1,4 @@
+// src/components/RegisterForm.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, loginGoogle, loginFacebook } from '../services/AuthService';
@@ -6,7 +7,7 @@ const RegisterForm = () => {
   const { signUpWithEmail } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Obtener la función de navegación
+  const navigate = useNavigate();
 
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
@@ -18,11 +19,11 @@ const RegisterForm = () => {
   };
 
   const goToHome = () => {
-    navigate('/'); // Redirigir al usuario a la página principal
+    navigate('/');
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Crear una cuenta</h2>
       <form onSubmit={handleEmailSignUp}>
         <input
@@ -37,14 +38,14 @@ const RegisterForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Crear Cuenta</button>
+        <button type="submit" className="register-button">Crear Cuenta</button>
       </form>
-      <div>
-        <button onClick={loginGoogle}>Registrarse con Google</button>
-        <button onClick={loginFacebook}>Registrarse con Facebook</button>
+      <div className="social-buttons">
+        <button onClick={loginGoogle} className="social-button">Registrarse con Google</button>
+        <button onClick={loginFacebook} className="social-button">Registrarse con Facebook</button>
       </div>
       <div>
-        <button onClick={goToHome}>Volver a la página principal</button>
+        <button onClick={goToHome} className="back-button">Volver a la página principal</button>
       </div>
     </div>
   );

@@ -1,14 +1,15 @@
+// src/components/Login.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginGoogle, loginFacebook } from '../services/AuthService';
 
 const Login = () => {
-  const navigate = useNavigate(); // Reemplaza useHistory por useNavigate
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       await loginGoogle();
-      navigate('/home'); // Redirige al usuario a la página Home después del inicio de sesión
+      navigate('/home');
     } catch (error) {
       console.error(error);
     }
@@ -17,23 +18,18 @@ const Login = () => {
   const handleFacebookSignIn = async () => {
     try {
       await loginFacebook();
-      navigate('/home'); // Redirige al usuario a la página Home después del inicio de sesión
+      navigate('/home');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h1>Inicio de sesión</h1>
-      <button onClick={handleGoogleSignIn}>Iniciar sesión con Google</button>
-      <br />
-      <br />
-      <button onClick={handleFacebookSignIn}>Iniciar sesión con Facebook</button>
-
+      <button onClick={handleGoogleSignIn} className="login-button">Iniciar sesión con Google</button>
+      <button onClick={handleFacebookSignIn} className="login-button">Iniciar sesión con Facebook</button>
     </div>
-    
-    
   );
 };
 
